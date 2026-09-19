@@ -31,7 +31,13 @@ const defaultActivities = [
 // ===== 数据管理 =====
 function loadActivities() {
   const stored = localStorage.getItem("zhukeActivities");
-  if (stored) return JSON.parse(stored);
+  if (stored) {
+    const parsed = JSON.parse(stored);
+    // 如果缓存数据条数少于默认数据，说明是旧数据或异常数据，用默认数据覆盖
+    if (Array.isArray(parsed) && parsed.length >= defaultActivities.length) {
+      return parsed;
+    }
+  }
   saveActivities(defaultActivities);
   return [...defaultActivities];
 }
