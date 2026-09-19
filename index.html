@@ -1,74 +1,191 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>珠海科技学院校园活动聚合站</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>珠海科技学院校园活动聚合站</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>珠海科技学院校园活动聚合站</h1>
-            <p>校内竞赛、讲座、社团招募、学习小组信息一站式浏览</p>
-        </header>
-
-        <div class="filter-box">
-            <label>筛选活动类型：</label>
-            <select id="typeFilter">
-                <option value="all">全部活动</option>
-                <option value="竞赛">竞赛</option>
-                <option value="讲座">讲座/分享会</option>
-                <option value="招募">团队/社团招募</option>
-                <option value="学习小组">学习小组</option>
-                <option value="志愿">志愿活动</option>
-            </select>
-            <input type="text" id="searchInput" placeholder="搜索活动名称/简介">
-        </div>
-
-        <section class="activity-list" id="activityList">
-            <!-- 活动卡片由js渲染 -->
-        </section>
-
-        <hr>
-        <h2>发布新活动</h2>
-        <form id="publishForm">
-            <div class="form-item">
-                <label>活动标题</label>
-                <input type="text" id="title" required placeholder="例如：蓝桥杯程序设计校内训练营">
-            </div>
-            <div class="form-item">
-                <label>活动类型</label>
-                <select id="actType">
-                    <option value="竞赛">竞赛</option>
-                    <option value="讲座">讲座/分享会</option>
-                    <option value="招募">团队/社团招募</option>
-                    <option value="学习小组">学习小组</option>
-                    <option value="志愿">志愿活动</option>
-                </select>
-            </div>
-            <div class="form-item">
-                <label>发布方</label>
-                <select id="publisher">
-                    <option value="学校官方">珠海科技学院（院系/社团官方）</option>
-                    <option value="学生自发">学生个人发起</option>
-                </select>
-            </div>
-            <div class="form-item">
-                <label>报名截止日期</label>
-                <input type="datetime-local" id="deadline" required>
-            </div>
-            <div class="form-item">
-                <label>活动简介</label>
-                <textarea id="desc" rows="4" required placeholder="填写活动内容、面向人群、地点等"></textarea>
-            </div>
-            <button type="submit">提交发布</button>
-        </form>
-        <footer>
-            <p>珠海科技学院 | 校园活动聚合平台 · 计算机协会项目</p>
-        </footer>
+  <!-- 顶部导航 -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-brand">
+        <span class="brand-icon">🎓</span>
+        <span class="brand-text">珠海科技学院</span>
+      </a>
+      <div class="nav-links">
+        <a href="#" class="nav-link active" data-view="home">首页</a>
+        <a href="#" class="nav-link" data-view="stats">数据看板</a>
+      </div>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-toggle" title="切换主题">
+          <span class="theme-icon">🌙</span>
+        </button>
+        <button class="btn-publish" id="btn-open-publish">+ 发布活动</button>
+      </div>
     </div>
+  </nav>
 
-    <script src="script.js"></script>
+  <!-- 英雄横幅 -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">珠海科技学院校园活动聚合站</h1>
+      <p class="hero-subtitle">校内竞赛、讲座、社团招募、学习小组信息一站式浏览</p>
+      <div class="hero-stats" id="hero-stats"></div>
+    </div>
+    <div class="hero-decoration">
+      <div class="floating-card fc-1">🏆</div>
+      <div class="floating-card fc-2">🎤</div>
+      <div class="floating-card fc-3">👥</div>
+      <div class="floating-card fc-4">📖</div>
+      <div class="floating-card fc-5">🤝</div>
+      <div class="floating-card fc-6">💡</div>
+    </div>
+  </section>
+
+  <!-- 主内容区 -->
+  <main class="main-content">
+    <!-- 首页视图 -->
+    <section id="view-home" class="view active">
+      <!-- 搜索与筛选 -->
+      <div class="controls-bar">
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+          </svg>
+          <input type="text" id="search-input" placeholder="搜索活动名称或简介...">
+        </div>
+        <div class="filters">
+          <select id="type-filter" class="filter-select">
+            <option value="all">全部类型</option>
+            <option value="竞赛">🏆 竞赛</option>
+            <option value="讲座">🎤 讲座/分享会</option>
+            <option value="招募">👥 团队/社团招募</option>
+            <option value="学习小组">📖 学习小组</option>
+            <option value="志愿">🤝 志愿活动</option>
+          </select>
+          <select id="publisher-filter" class="filter-select">
+            <option value="all">全部发布方</option>
+            <option value="学校官方">🏫 学校官方</option>
+            <option value="学生自发">👤 学生自发</option>
+          </select>
+          <select id="status-filter" class="filter-select">
+            <option value="all">全部状态</option>
+            <option value="upcoming">报名中</option>
+            <option value="expired">已截止</option>
+            <option value="no-deadline">无截止时间</option>
+          </select>
+          <select id="sort-filter" class="filter-select">
+            <option value="deadline-asc">截止日期 ↑</option>
+            <option value="deadline-desc">截止日期 ↓</option>
+            <option value="name">按名称</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 分类标签快捷栏 -->
+      <div class="category-tabs" id="category-tabs">
+        <button class="tab active" data-type="all">全部</button>
+        <button class="tab" data-type="竞赛">🏆 竞赛</button>
+        <button class="tab" data-type="讲座">🎤 讲座</button>
+        <button class="tab" data-type="招募">👥 招募</button>
+        <button class="tab" data-type="学习小组">📖 学习小组</button>
+        <button class="tab" data-type="志愿">🤝 志愿</button>
+      </div>
+
+      <!-- 活动数量提示 -->
+      <div class="result-info">
+        <span id="result-count">0</span> 个活动
+      </div>
+
+      <!-- 活动列表 -->
+      <section id="activity-list" class="activity-list"></section>
+
+      <!-- 空状态 -->
+      <div id="empty-state" class="empty-state" style="display:none;">
+        <div class="empty-icon">🔍</div>
+        <h3>暂无匹配的活动</h3>
+        <p>试试调整筛选条件，或发布一个新活动</p>
+      </div>
+    </section>
+
+    <!-- 数据看板视图 -->
+    <section id="view-stats" class="view">
+      <h2 class="view-title">数据看板</h2>
+      <div class="stats-grid" id="stats-grid"></div>
+      <div class="chart-container">
+        <h3>各类型活动分布</h3>
+        <div id="category-chart"></div>
+      </div>
+      <div class="chart-container" style="margin-top:20px;">
+        <h3>发布方占比</h3>
+        <div id="publisher-chart"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 发布弹窗 -->
+  <div class="modal-overlay" id="publish-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>发布新活动</h2>
+        <button class="modal-close" id="modal-close">&times;</button>
+      </div>
+      <form id="new-activity-form" class="modal-body">
+        <div class="form-group">
+          <label for="act-title">活动标题</label>
+          <input type="text" id="act-title" placeholder="例如：蓝桥杯程序设计校内训练营" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="act-type">活动类型</label>
+            <select id="act-type" required>
+              <option value="">选择类型</option>
+              <option value="竞赛">🏆 竞赛</option>
+              <option value="讲座">🎤 讲座/分享会</option>
+              <option value="招募">👥 团队/社团招募</option>
+              <option value="学习小组">📖 学习小组</option>
+              <option value="志愿">🤝 志愿活动</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="act-publisher">发布方</label>
+            <select id="act-publisher" required>
+              <option value="学校官方">珠海科技学院（院系/社团官方）</option>
+              <option value="学生自发">学生个人发起</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="act-deadline">报名截止日期</label>
+          <input type="datetime-local" id="act-deadline">
+        </div>
+        <div class="form-group">
+          <label for="act-desc">活动简介</label>
+          <textarea id="act-desc" placeholder="填写活动内容、面向人群、地点等" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn-submit">发布活动</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 活动详情弹窗 -->
+  <div class="modal-overlay" id="detail-modal">
+    <div class="modal modal-detail">
+      <button class="modal-close" id="detail-close">&times;</button>
+      <div id="detail-content"></div>
+    </div>
+  </div>
+
+  <!-- 消息提示 -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <footer>
+    <p>珠海科技学院 | 校园活动聚合平台 · 计算机协会项目</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
