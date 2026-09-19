@@ -3,65 +3,181 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>校园活动聚合站</title>
+  <title>CampusHub · 校园活动聚合站</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <h1>校园活动聚合站</h1>
-    <p>发现精彩校园活动，不错过每一场</p>
-  </header>
+  <!-- 顶部导航 -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-brand">
+        <span class="brand-icon">🎓</span>
+        <span class="brand-text">CampusHub</span>
+      </a>
+      <div class="nav-links">
+        <a href="#" class="nav-link active" data-view="home">首页</a>
+        <a href="#" class="nav-link" data-view="stats">数据看板</a>
+      </div>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-toggle" title="切换主题">
+          <span class="theme-icon">🌙</span>
+        </button>
+        <button class="btn-publish" id="btn-open-publish">+ 发布活动</button>
+      </div>
+    </div>
+  </nav>
 
-  <main>
-    <!-- 筛选区域 -->
-    <section class="filter-bar">
-      <label for="category-filter">分类筛选：</label>
-      <select id="category-filter">
-        <option value="all">全部</option>
-        <option value="学术">学术</option>
-        <option value="体育">体育</option>
-        <option value="文艺">文艺</option>
-        <option value="社团">社团</option>
-        <option value="志愿">志愿</option>
-        <option value="就业">就业</option>
-      </select>
-      <label for="status-filter">状态筛选：</label>
-      <select id="status-filter">
-        <option value="all">全部</option>
-        <option value="upcoming">即将开始</option>
-        <option value="expired">已过期</option>
-      </select>
+  <!-- 英雄横幅 -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">发现校园精彩活动</h1>
+      <p class="hero-subtitle">覆盖学术、体育、文艺等六大领域，不错过每一场精彩</p>
+      <div class="hero-stats" id="hero-stats">
+        <!-- JS 动态渲染 -->
+      </div>
+    </div>
+    <div class="hero-decoration">
+      <div class="floating-card fc-1">📚</div>
+      <div class="floating-card fc-2">⚽</div>
+      <div class="floating-card fc-3">🎵</div>
+      <div class="floating-card fc-4">🎭</div>
+      <div class="floating-card fc-5">🤝</div>
+      <div class="floating-card fc-6">💼</div>
+    </div>
+  </section>
+
+  <!-- 主内容区 -->
+  <main class="main-content">
+    <!-- 首页视图 -->
+    <section id="view-home" class="view active">
+      <!-- 搜索与筛选 -->
+      <div class="controls-bar">
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+          </svg>
+          <input type="text" id="search-input" placeholder="搜索活动名称或地点...">
+        </div>
+        <div class="filters">
+          <select id="category-filter" class="filter-select">
+            <option value="all">全部分类</option>
+            <option value="学术">📚 学术</option>
+            <option value="体育">⚽ 体育</option>
+            <option value="文艺">🎵 文艺</option>
+            <option value="社团">🎭 社团</option>
+            <option value="志愿">🤝 志愿</option>
+            <option value="就业">💼 就业</option>
+          </select>
+          <select id="status-filter" class="filter-select">
+            <option value="all">全部状态</option>
+            <option value="upcoming">即将开始</option>
+            <option value="expired">已结束</option>
+          </select>
+          <select id="sort-filter" class="filter-select">
+            <option value="time-asc">时间 ↑</option>
+            <option value="time-desc">时间 ↓</option>
+            <option value="name">按名称</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 分类标签快捷栏 -->
+      <div class="category-tabs" id="category-tabs">
+        <button class="tab active" data-category="all">全部</button>
+        <button class="tab" data-category="学术">📚 学术</button>
+        <button class="tab" data-category="体育">⚽ 体育</button>
+        <button class="tab" data-category="文艺">🎵 文艺</button>
+        <button class="tab" data-category="社团">🎭 社团</button>
+        <button class="tab" data-category="志愿">🤝 志愿</button>
+        <button class="tab" data-category="就业">💼 就业</button>
+      </div>
+
+      <!-- 活动数量提示 -->
+      <div class="result-info">
+        <span id="result-count">0</span> 个活动
+      </div>
+
+      <!-- 活动列表 -->
+      <section id="activity-list" class="activity-list"></section>
+
+      <!-- 空状态 -->
+      <div id="empty-state" class="empty-state" style="display:none;">
+        <div class="empty-icon">🔍</div>
+        <h3>暂无匹配的活动</h3>
+        <p>试试调整筛选条件，或发布一个新活动</p>
+      </div>
     </section>
 
-    <!-- 活动列表 -->
-    <section id="activity-list" class="activity-list">
-      <!-- JS 动态渲染 -->
-    </section>
-
-    <!-- 发布表单 -->
-    <section class="publish-form">
-      <h2>发布新活动</h2>
-      <form id="new-activity-form">
-        <input type="text" id="act-title" placeholder="活动名称" required>
-        <select id="act-category" required>
-          <option value="">选择分类</option>
-          <option value="学术">学术</option>
-          <option value="体育">体育</option>
-          <option value="文艺">文艺</option>
-          <option value="社团">社团</option>
-          <option value="志愿">志愿</option>
-          <option value="就业">就业</option>
-        </select>
-        <input type="text" id="act-location" placeholder="活动地点" required>
-        <input type="datetime-local" id="act-time" required>
-        <textarea id="act-desc" placeholder="活动简介" rows="3"></textarea>
-        <button type="submit">发布活动</button>
-      </form>
+    <!-- 数据看板视图 -->
+    <section id="view-stats" class="view">
+      <h2 class="view-title">数据看板</h2>
+      <div class="stats-grid" id="stats-grid">
+        <!-- JS 动态渲染 -->
+      </div>
+      <div class="chart-container">
+        <h3>各分类活动分布</h3>
+        <canvas id="category-chart"></canvas>
+      </div>
     </section>
   </main>
 
+  <!-- 发布弹窗 -->
+  <div class="modal-overlay" id="publish-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>发布新活动</h2>
+        <button class="modal-close" id="modal-close">&times;</button>
+      </div>
+      <form id="new-activity-form" class="modal-body">
+        <div class="form-group">
+          <label for="act-title">活动名称</label>
+          <input type="text" id="act-title" placeholder="例如：秋季校园招聘会" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="act-category">活动分类</label>
+            <select id="act-category" required>
+              <option value="">选择分类</option>
+              <option value="学术">📚 学术</option>
+              <option value="体育">⚽ 体育</option>
+              <option value="文艺">🎵 文艺</option>
+              <option value="社团">🎭 社团</option>
+              <option value="志愿">🤝 志愿</option>
+              <option value="就业">💼 就业</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="act-time">活动时间</label>
+            <input type="datetime-local" id="act-time" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="act-location">活动地点</label>
+          <input type="text" id="act-location" placeholder="例如：图书馆报告厅" required>
+        </div>
+        <div class="form-group">
+          <label for="act-desc">活动简介</label>
+          <textarea id="act-desc" placeholder="简要描述活动内容..." rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn-submit">发布活动</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 活动详情弹窗 -->
+  <div class="modal-overlay" id="detail-modal">
+    <div class="modal modal-detail">
+      <button class="modal-close" id="detail-close">&times;</button>
+      <div id="detail-content"></div>
+    </div>
+  </div>
+
+  <!-- 消息提示 -->
+  <div class="toast-container" id="toast-container"></div>
+
   <footer>
-    <p>&copy; 2026 校园活动聚合站</p>
+    <p>&copy; 2026 CampusHub · 校园活动聚合站</p>
   </footer>
 
   <script src="script.js"></script>
