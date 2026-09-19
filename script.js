@@ -1,334 +1,120 @@
-// ===== 26条校园活动模拟数据 =====
-const defaultActivities = [
-  { id: 1, title: "人工智能前沿讲座", category: "学术", location: "图书馆报告厅", time: "2026-09-25T14:00", desc: "邀请AI领域专家分享最新研究成果与未来趋势" },
-  { id: 2, title: "校际篮球联赛", category: "体育", location: "体育馆", time: "2026-09-28T09:00", desc: "四校联合篮球对抗赛，争夺校级冠军" },
-  { id: 3, title: "校园歌手大赛初赛", category: "文艺", location: "大学生活动中心", time: "2026-10-10T19:00", desc: "一年一度的校园歌手选拔，展现音乐才华" },
-  { id: 4, title: "辩论社招新", category: "社团", location: "教学楼B203", time: "2026-09-22T18:30", desc: "辩论爱好者加入我们的大家庭，锻炼思维与口才" },
-  { id: 5, title: "社区志愿服务", category: "志愿", location: "校门口集合", time: "2026-09-27T08:00", desc: "前往社区开展环保志愿活动，共建绿色家园" },
-  { id: 6, title: "秋季校园招聘会", category: "就业", location: "就业中心大厅", time: "2026-10-15T09:00", desc: "50+企业现场招聘，覆盖多个行业" },
-  { id: 7, title: "数据结构竞赛培训", category: "学术", location: "计算机楼301", time: "2026-10-05T14:00", desc: "ACM竞赛队教练带队训练，备战区域赛" },
-  { id: 8, title: "足球新生杯", category: "体育", location: "足球场", time: "2026-10-01T15:00", desc: "新生班级间足球对抗赛，挥洒汗水" },
-  { id: 9, title: "话剧社年度演出", category: "文艺", location: "大礼堂", time: "2026-11-20T19:30", desc: "原创话剧《青春纪事》首演，感受戏剧魅力" },
-  { id: 10, title: "摄影社外拍活动", category: "社团", location: "校门口集合", time: "2026-09-30T10:00", desc: "秋日校园与城市风光外拍，记录美好瞬间" },
-  { id: 11, title: "敬老院探访", category: "志愿", location: "校门口集合", time: "2026-10-12T08:30", desc: "走进敬老院，传递温暖与关怀" },
-  { id: 12, title: "简历制作工作坊", category: "就业", location: "就业中心会议室", time: "2026-10-08T14:00", desc: "资深HR手把手教你写简历，提升求职竞争力" },
-  { id: 13, title: "量子计算入门讲座", category: "学术", location: "物理楼报告厅", time: "2026-10-18T14:00", desc: "了解量子计算的基本原理与应用前景" },
-  { id: 14, title: "校运会", category: "体育", location: "田径场", time: "2026-10-25T08:00", desc: "一年一度的全校运动会，挑战自我极限" },
-  { id: 15, title: "电影之夜", category: "文艺", location: "学生活动中心", time: "2026-09-29T19:00", desc: "放映经典影片，交流观影感受" },
-  { id: 16, title: "机器人社团展示", category: "社团", location: "工程楼展厅", time: "2026-10-03T13:00", desc: "社团成员机器人作品展示与互动体验" },
-  { id: 17, title: "无偿献血活动", category: "志愿", location: "食堂广场", time: "2026-10-20T09:00", desc: "与市中心血站联合举办的爱心献血活动" },
-  { id: 18, title: "模拟面试大赛", category: "就业", location: "行政楼多功能厅", time: "2026-11-01T14:00", desc: "企业面试官现场模拟面试，积累实战经验" },
-  { id: 19, title: "数学建模经验分享", category: "学术", location: "数学楼201", time: "2026-10-22T15:00", desc: "国赛一等奖团队分享备赛经验与心得" },
-  { id: 20, title: "羽毛球友谊赛", category: "体育", location: "羽毛球馆", time: "2026-10-06T16:00", desc: "院系间羽毛球交流赛，以球会友" },
-  { id: 21, title: "书法展览", category: "文艺", location: "图书馆一楼展厅", time: "2026-10-28T10:00", desc: "书法协会成员作品展览，感受传统文化" },
-  { id: 22, title: "天文社观星夜", category: "社团", location: "天文台", time: "2026-10-15T20:00", desc: "使用专业望远镜观测星空，探索宇宙奥秘" },
-  { id: 23, title: "支教志愿者招募", category: "志愿", location: "教学楼A102", time: "2026-09-20T15:00", desc: "暑期山区支教志愿者选拔，传递知识与希望" },
-  { id: 24, title: "创业路演", category: "就业", location: "创新创业中心", time: "2026-11-10T14:00", desc: "大学生创业项目路演与投资对接" },
-  { id: 25, title: "英语角", category: "学术", location: "英语角草坪", time: "2026-09-23T17:00", desc: "每周英语口语交流，提升口语表达能力" },
-  { id: 26, title: "街舞社招新", category: "社团", location: "舞蹈房", time: "2026-09-21T19:00", desc: "零基础也可加入，感受街舞魅力与节奏" }
+// 珠海科技学院 26条模拟活动数据
+let activityData = JSON.parse(localStorage.getItem("actData")) || [
+    {title:"蓝桥杯程序设计校内训练营",type:"竞赛",publisher:"学校官方",deadline:"2026-09-24T22:00",desc:"9月20日起每周六19:00训练；面向全校学生；零基础可参加。"},
+    {title:"AI应用入门公开课",type:"讲座",publisher:"学校官方",deadline:"",desc:"9月19日19:00；计算机学院教学楼；面向全校学生；无需报名；预计90分钟。"},
+    {title:"大学生创新创业项目团队招募",type:"招募",publisher:"学校官方",deadline:"2026-09-22T18:00",desc:"招募开发、设计、材料成员；每周稳定投入4小时以上；需提交简短自我介绍。"},
+    {title:"数学建模竞赛经验分享会",type:"讲座",publisher:"学校官方",deadline:"",desc:"直播时间为9月18日19:30；不限专业；直播已结束，活动回放预计9月20日上传。"},
+    {title:"校园公益志愿服务活动",type:"志愿",publisher:"学校官方",deadline:"2026-09-20T12:00",desc:"活动时间9月27日8:30—17:00；预计服务8小时；需提前到场签到。"},
+    {title:"Web开发零基础学习小组",type:"学习小组",publisher:"学校官方",deadline:"",desc:"9月23日起每周三19:30开展，共6周；面向零基础学生；限30人；报名时间未注明，满员即止。"},
+    {title:"AI创新应用挑战赛",type:"竞赛",publisher:"学校官方",deadline:"2026-09-21T18:00",desc:"2—4人组队；9月21日18:00前完成校内意向登记；10月20日提交作品；意向登记不等同于最终作品提交。"},
+    {title:"校园软件项目组招募",type:"招募",publisher:"学校官方",deadline:"",desc:"开发校园实用工具；面向大一、大二学生；希望成员了解Git基本操作；每周预计投入5小时；长期招募，满员即止。"},
+    {title:"程序设计训练营补充通知",type:"讲座",publisher:"学校官方",deadline:"2026-09-24T22:00",desc:"因场地调整，首次训练改为9月21日19:30，地点改至实验楼A402；已报名同学无需重复提交；报名截止时间不变。"},
+    {title:"前端开发经验交流会",type:"讲座",publisher:"学校官方",deadline:"",desc:"9月19日15:00—16:30；线下A201并同步线上直播；无需报名。"},
+    {title:"大学生科研入门分享会",type:"讲座",publisher:"学校官方",deadline:"",desc:"9月21日19:00—20:30；介绍论文检索、学生科研项目和导师联系方法；面向全校学生。"},
+    {title:"全国高校计算机能力挑战赛",type:"竞赛",publisher:"学校官方",deadline:"2026-10-05T23:59",desc:"面向本科生；个人参赛；具体费用信息未提供。"},
+    {title:"科研助理招募",type:"招募",publisher:"学校官方",deadline:"2026-09-21T23:59",desc:"协助数据整理和实验工作；仅限大二及以上学生；每周预计投入6小时。"},
+    {title:"Git与GitHub零基础工作坊",type:"学习小组",publisher:"学校官方",deadline:"2026-09-21T20:30",desc:"9月21日19:00—20:30；主要面向大一新生；限40人；需提前预约，提交报名表不代表最终录取，以审核通知为准。"},
+    {title:"AI应用创意挑战",type:"竞赛",publisher:"学校官方",deadline:"2026-09-23T23:59",desc:"9月23日23:59前提交创意方案；9月30日前提交最终作品；允许个人或团队参加；进入展示环节后可再组队。"},
+    {title:"校园摄影志愿者招募",type:"招募",publisher:"学校官方",deadline:"",desc:"长期招募；参与校内大型活动摄影；有摄影设备者优先但不作硬性要求。"},
+    {title:"Python程序设计学习资料合集",type:"学习小组",publisher:"学校官方",deadline:"2026-09-22T23:59",desc:"包含课程、练习和项目案例；资料长期开放；当前网盘提取信息有效期至9月22日，后续将统一更新。"},
+    {title:"网络安全兴趣交流小组",type:"学习小组",publisher:"学校官方",deadline:"",desc:"首次交流时间9月19日19:30；之后每两周开展一次；面向CTF、Web安全等方向感兴趣的学生；不限基础。"},
+    {title:"学生创新项目路演观摩",type:"讲座",publisher:"学校官方",deadline:"2026-09-18T22:00",desc:"活动时间9月20日14:30；原报名截止时间为9月18日22:00；活动说明如现场仍有余位，可接受候补入场。"},
+    {title:"创新创业项目团队补充说明",type:"招募",publisher:"学校官方",deadline:"2026-09-22T18:00",desc:"开发方向名额已满，现主要补充设计与材料成员；9月22日18:00截止；此前已投递者无需重复提交。"},
+    {title:"计算机学院AI产品设计分享会",type:"讲座",publisher:"学校官方",deadline:"",desc:"计算机学院发布；9月20日19:00；明德楼B203；面向全校学生；无需报名，座位有限。"},
+    {title:"周末羽毛球约球",type:"招募",publisher:"学生自发",deadline:"",desc:"学生个人发布；9月20日16:00；计划6—8人；费用AA；场地待最终确认。"},
+    {title:"AI工具交流搭子招募",type:"招募",publisher:"学生自发",deadline:"",desc:"学生个人发布；拟于9月21日晚开展；欢迎零基础；报名后拉群；具体地点未确定。"},
+    {title:"校园兼职福利分享",type:"招募",publisher:"学生自发",deadline:"",desc:"学生个人发布；称"零门槛、日结"，要求添加私人微信获取详情；未提供主办方、地点和完整内容。⚠️信息存疑，请谨慎辨别，谨防诈骗。"},
+    {title:"数码新品体验交流",type:"讲座",publisher:"学生自发",deadline:"",desc:"学生个人发布；标题为技术交流，正文主要介绍某商家优惠及购买链接；活动时间、地点未注明。⚠️疑似商业推广，请理性甄别。"},
+    {title:"外国语学院校园语言角",type:"讲座",publisher:"学校官方",deadline:"",desc:"外国语学院发布；9月21日15:00；面向全校学生；自由交流；场地容量有限，无需提前报名。"},
 ];
 
-// ===== 数据管理 =====
-function loadActivities() {
-  const stored = localStorage.getItem("campusActivities");
-  if (stored) return JSON.parse(stored);
-  saveActivities(defaultActivities);
-  return [...defaultActivities];
+const activityListDom = document.getElementById("activityList");
+const publishForm = document.getElementById("publishForm");
+const typeFilter = document.getElementById("typeFilter");
+const searchInput = document.getElementById("searchInput");
+
+// 渲染活动列表
+function renderList(filterType="all", keyword=""){
+    activityListDom.innerHTML = "";
+    const now = new Date();
+    let list = activityData;
+    if(filterType !== "all"){
+        list = activityData.filter(item=>item.type === filterType);
+    }
+    if(keyword){
+        list = list.filter(item=>item.title.includes(keyword) || item.desc.includes(keyword));
+    }
+    // 排序：未截止放前面，过期放后面
+    list.sort((a,b)=>{
+        const dA = a.deadline ? new Date(a.deadline) : new Date("9999-12-31");
+        const dB = b.deadline ? new Date(b.deadline) : new Date("9999-12-31");
+        return dA - dB;
+    })
+    list.forEach(item=>{
+        let deadlineTime = item.deadline ? new Date(item.deadline) : null;
+        const isExpired = deadlineTime && deadlineTime < now;
+        let tipText = "";
+        let tipColor = "";
+        if(!deadlineTime){
+            tipText = "⏰无报名截止时间";
+            tipColor = "#444";
+        }else if(isExpired){
+            tipText = "⚠️报名已截止";
+            tipColor = "var(--danger-red)";
+        }else{
+            const diffMs = deadlineTime - now;
+            const day = Math.floor(diffMs/(1000*60*60*24));
+            const hour = Math.floor((diffMs %(1000*60*60*24))/(1000*60*60));
+            tipText = `⏰距离报名截止还有 ${day}天${hour}小时`;
+            if(day <=1) tipColor = "var(--danger-red)";
+            else if(day <=3) tipColor = "var(--warn-orange)";
+            else tipColor = "var(--success-green)";
+        }
+        const card = document.createElement("div");
+        card.className = `card ${isExpired?"expired":""}`;
+        let tagHtml = "";
+        if(item.publisher === "学校官方"){
+            tagHtml += `<span class="tag official">官方</span>`;
+        }else{
+            tagHtml += `<span class="tag student">学生发起</span>`;
+        }
+        if(item.desc.includes("⚠️")){
+            tagHtml += `<span class="tag warning">信息警示</span>`;
+        }
+        card.innerHTML = `
+            ${tagHtml}
+            <h3>${item.title}</h3>
+            <p>${item.desc}</p>
+            <p class="deadline" style="color:${tipColor}">${tipText}</p>
+        `
+        activityListDom.appendChild(card);
+    })
 }
 
-function saveActivities(data) {
-  localStorage.setItem("campusActivities", JSON.stringify(data));
-}
+// 筛选事件监听
+typeFilter.addEventListener("change",()=>{
+    renderList(typeFilter.value, searchInput.value.trim())
+})
+searchInput.addEventListener("input",()=>{
+    renderList(typeFilter.value, searchInput.value.trim())
+})
 
-// ===== 倒计时 =====
-function getCountdown(targetTime) {
-  const now = new Date();
-  const target = new Date(targetTime);
-  const diff = target - now;
-  if (diff <= 0) return { expired: true, text: "活动已结束", days: 0, hours: 0, minutes: 0 };
-  const days = Math.floor(diff / 86400000);
-  const hours = Math.floor((diff % 86400000) / 3600000);
-  const minutes = Math.floor((diff % 3600000) / 60000);
-  let text = "";
-  if (days > 0) text = `${days}天 ${hours}小时`;
-  else if (hours > 0) text = `${hours}小时 ${minutes}分钟`;
-  else text = `${minutes}分钟`;
-  return { expired: false, text, days, hours, minutes };
-}
+// 表单提交
+publishForm.addEventListener("submit",(e)=>{
+    e.preventDefault();
+    const newAct = {
+        title:document.getElementById("title").value,
+        type:document.getElementById("actType").value,
+        publisher:document.getElementById("publisher").value,
+        deadline:document.getElementById("deadline").value,
+        desc:document.getElementById("desc").value
+    }
+    activityData.push(newAct);
+    localStorage.setItem("actData", JSON.stringify(activityData));
+    publishForm.reset();
+    renderList();
+    alert("活动发布成功！");
+})
 
-// ===== Toast 消息 =====
-function showToast(message, type = "success") {
-  const container = document.getElementById("toast-container");
-  const toast = document.createElement("div");
-  toast.className = `toast ${type}`;
-  toast.textContent = message;
-  container.appendChild(toast);
-  setTimeout(() => toast.remove(), 3000);
-}
-
-// ===== 渲染活动卡片 =====
-function renderActivities(activities) {
-  const container = document.getElementById("activity-list");
-  const emptyState = document.getElementById("empty-state");
-  container.innerHTML = "";
-
-  if (activities.length === 0) {
-    emptyState.style.display = "block";
-    return;
-  }
-  emptyState.style.display = "none";
-
-  activities.forEach((act, index) => {
-    const cd = getCountdown(act.time);
-    const card = document.createElement("div");
-    card.className = `activity-card${cd.expired ? " expired" : ""}`;
-    card.style.animationDelay = `${index * 0.05}s`;
-    card.onclick = () => showDetail(act);
-
-    card.innerHTML = `
-      <div class="card-accent ${act.category}"></div>
-      <div class="card-body">
-        <div class="card-header">
-          <span class="category-tag ${act.category}">${act.category}</span>
-        </div>
-        <h3 class="card-title">${act.title}</h3>
-        <div class="card-meta">
-          <div class="meta-item"><span class="meta-icon">📍</span>${act.location}</div>
-          <div class="meta-item"><span class="meta-icon">🕐</span>${act.time.replace("T", " ")}</div>
-        </div>
-        ${act.desc ? `<p class="card-desc">${act.desc}</p>` : ""}
-        <div class="card-footer">
-          <span class="countdown-badge ${cd.expired ? "expired" : "upcoming"}">
-            ${cd.expired ? "已结束" : "⏱ " + cd.text}
-          </span>
-          <span class="card-action">详情 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></span>
-        </div>
-      </div>
-    `;
-    container.appendChild(card);
-  });
-}
-
-// ===== 活动详情弹窗 =====
-function showDetail(act) {
-  const cd = getCountdown(act.time);
-  const modal = document.getElementById("detail-modal");
-  const content = document.getElementById("detail-content");
-  content.innerHTML = `
-    <div class="detail-hero ${act.category}">
-      <span class="detail-tag">${act.category}</span>
-      <h2>${act.title}</h2>
-    </div>
-    <div class="detail-info">
-      <div class="detail-row">
-        <span class="detail-icon">📍</span>
-        <span class="detail-label">地点</span>
-        <span class="detail-value">${act.location}</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-icon">🕐</span>
-        <span class="detail-label">时间</span>
-        <span class="detail-value">${act.time.replace("T", " ")}</span>
-      </div>
-      ${act.desc ? `<div class="detail-row"><span class="detail-icon">📝</span><span class="detail-label">简介</span><span class="detail-value">${act.desc}</span></div>` : ""}
-    </div>
-    <div class="detail-countdown">
-      <div class="dc-label">${cd.expired ? "活动状态" : "距离开始还有"}</div>
-      <div class="dc-value" style="color:${cd.expired ? "var(--text-muted)" : "var(--accent)"}">${cd.expired ? "已结束" : cd.text}</div>
-    </div>
-  `;
-  modal.classList.add("open");
-}
-
-// ===== 筛选与排序 =====
-function filterActivities() {
-  const activities = loadActivities();
-  const category = document.getElementById("category-filter").value;
-  const status = document.getElementById("status-filter").value;
-  const sort = document.getElementById("sort-filter").value;
-  const search = document.getElementById("search-input").value.toLowerCase().trim();
-
-  let filtered = activities;
-  if (category !== "all") filtered = filtered.filter(a => a.category === category);
-  if (status === "upcoming") filtered = filtered.filter(a => !getCountdown(a.time).expired);
-  if (status === "expired") filtered = filtered.filter(a => getCountdown(a.time).expired);
-  if (search) filtered = filtered.filter(a => a.title.toLowerCase().includes(search) || a.location.toLowerCase().includes(search) || (a.desc || "").toLowerCase().includes(search));
-
-  if (sort === "time-asc") filtered.sort((a, b) => new Date(a.time) - new Date(b.time));
-  else if (sort === "time-desc") filtered.sort((a, b) => new Date(b.time) - new Date(a.time));
-  else if (sort === "name") filtered.sort((a, b) => a.title.localeCompare(b.title, "zh"));
-
-  document.getElementById("result-count").textContent = filtered.length;
-  renderActivities(filtered);
-}
-
-// ===== 分类标签栏 =====
-function setupTabs() {
-  document.querySelectorAll(".category-tabs .tab").forEach(tab => {
-    tab.addEventListener("click", () => {
-      document.querySelectorAll(".category-tabs .tab").forEach(t => t.classList.remove("active"));
-      tab.classList.add("active");
-      document.getElementById("category-filter").value = tab.dataset.category;
-      filterActivities();
-    });
-  });
-}
-
-// ===== 导航视图切换 =====
-function setupNav() {
-  document.querySelectorAll(".nav-link").forEach(link => {
-    link.addEventListener("click", e => {
-      e.preventDefault();
-      document.querySelectorAll(".nav-link").forEach(l => l.classList.remove("active"));
-      link.classList.add("active");
-      const view = link.dataset.view;
-      document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
-      document.getElementById(`view-${view}`).classList.add("active");
-      if (view === "stats") renderStats();
-    });
-  });
-}
-
-// ===== 数据看板 =====
-function renderStats() {
-  const activities = loadActivities();
-  const categories = ["学术", "体育", "文艺", "社团", "志愿", "就业"];
-  const icons = ["📚", "⚽", "🎵", "🎭", "🤝", "💼"];
-  const upcoming = activities.filter(a => !getCountdown(a.time).expired).length;
-  const expired = activities.length - upcoming;
-
-  const grid = document.getElementById("stats-grid");
-  grid.innerHTML = "";
-
-  // 总览卡片
-  const overviewCards = [
-    { icon: "📋", num: activities.length, label: "活动总数" },
-    { icon: "🔥", num: upcoming, label: "即将开始" },
-    { icon: "✅", num: expired, label: "已结束" },
-    { icon: "📊", num: categories.length, label: "活动分类" }
-  ];
-  overviewCards.forEach(c => {
-    grid.innerHTML += `<div class="stat-card"><div class="stat-icon">${c.icon}</div><div class="stat-num">${c.num}</div><div class="stat-label">${c.label}</div></div>`;
-  });
-
-  // 各分类卡片
-  categories.forEach((cat, i) => {
-    const count = activities.filter(a => a.category === cat).length;
-    grid.innerHTML += `<div class="stat-card"><div class="stat-icon">${icons[i]}</div><div class="stat-num">${count}</div><div class="stat-label">${cat}</div></div>`;
-  });
-
-  // 柱状图
-  renderChart(activities, categories);
-}
-
-function renderChart(activities, categories) {
-  const chartEl = document.getElementById("category-chart");
-  const maxCount = Math.max(...categories.map(c => activities.filter(a => a.category === c).length));
-
-  chartEl.innerHTML = `<div class="bar-chart">${categories.map(cat => {
-    const count = activities.filter(a => a.category === cat).length;
-    const pct = maxCount > 0 ? (count / maxCount * 100) : 0;
-    return `<div class="bar-row">
-      <span class="bar-label">${cat}</span>
-      <div class="bar-track"><div class="bar-fill ${cat}" style="width:${pct}%">${count}</div></div>
-    </div>`;
-  }).join("")}</div>`;
-
-  // 延迟触发动画
-  setTimeout(() => {
-    chartEl.querySelectorAll(".bar-fill").forEach(bar => {
-      bar.style.width = bar.style.width;
-    });
-  }, 50);
-}
-
-// ===== Hero 统计 =====
-function renderHeroStats() {
-  const activities = loadActivities();
-  const upcoming = activities.filter(a => !getCountdown(a.time).expired).length;
-  const categories = new Set(activities.map(a => a.category)).size;
-  document.getElementById("hero-stats").innerHTML = `
-    <div class="hero-stat"><div class="hero-stat-num">${activities.length}</div><div class="hero-stat-label">活动总数</div></div>
-    <div class="hero-stat"><div class="hero-stat-num">${upcoming}</div><div class="hero-stat-label">即将开始</div></div>
-    <div class="hero-stat"><div class="hero-stat-num">${categories}</div><div class="hero-stat-label">活动分类</div></div>
-  `;
-}
-
-// ===== 发布弹窗 =====
-function setupPublishModal() {
-  const modal = document.getElementById("publish-modal");
-  document.getElementById("btn-open-publish").onclick = () => modal.classList.add("open");
-  document.getElementById("modal-close").onclick = () => modal.classList.remove("open");
-  modal.addEventListener("click", e => { if (e.target === modal) modal.classList.remove("open"); });
-}
-
-// ===== 详情弹窗关闭 =====
-function setupDetailModal() {
-  const modal = document.getElementById("detail-modal");
-  document.getElementById("detail-close").onclick = () => modal.classList.remove("open");
-  modal.addEventListener("click", e => { if (e.target === modal) modal.classList.remove("open"); });
-}
-
-// ===== 表单提交 =====
-function handleFormSubmit(e) {
-  e.preventDefault();
-  const title = document.getElementById("act-title").value.trim();
-  const category = document.getElementById("act-category").value;
-  const location = document.getElementById("act-location").value.trim();
-  const time = document.getElementById("act-time").value;
-  const desc = document.getElementById("act-desc").value.trim();
-
-  if (!title || !category || !location || !time) {
-    showToast("请填写所有必填项", "error");
-    return;
-  }
-
-  const activities = loadActivities();
-  activities.push({ id: Date.now(), title, category, location, time, desc });
-  saveActivities(activities);
-
-  document.getElementById("publish-modal").classList.remove("open");
-  e.target.reset();
-  showToast("活动发布成功！");
-  renderHeroStats();
-  filterActivities();
-}
-
-// ===== 主题切换 =====
-function setupTheme() {
-  const toggle = document.getElementById("theme-toggle");
-  const saved = localStorage.getItem("theme");
-  if (saved === "dark") document.documentElement.setAttribute("data-theme", "dark");
-  updateThemeIcon();
-
-  toggle.addEventListener("click", () => {
-    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-    document.documentElement.setAttribute("data-theme", isDark ? "" : "dark");
-    localStorage.setItem("theme", isDark ? "light" : "dark");
-    updateThemeIcon();
-  });
-}
-function updateThemeIcon() {
-  const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-  document.querySelector(".theme-icon").textContent = isDark ? "☀️" : "🌙";
-}
-
-// ===== 初始化 =====
-document.addEventListener("DOMContentLoaded", () => {
-  setupTheme();
-  setupNav();
-  setupTabs();
-  setupPublishModal();
-  setupDetailModal();
-  renderHeroStats();
-  filterActivities();
-
-  document.getElementById("category-filter").addEventListener("change", filterActivities);
-  document.getElementById("status-filter").addEventListener("change", filterActivities);
-  document.getElementById("sort-filter").addEventListener("change", filterActivities);
-  document.getElementById("search-input").addEventListener("input", filterActivities);
-  document.getElementById("new-activity-form").addEventListener("submit", handleFormSubmit);
-
-  // 每分钟刷新倒计时
-  setInterval(() => { renderHeroStats(); filterActivities(); }, 60000);
-});
+// 页面初始化渲染
+renderList();
